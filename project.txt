@@ -1,0 +1,72 @@
+
+See 'samples/project.yml' for an example.
+
+I)	Structure
+
+files:
+  <group>:
+    list:
+	  - <files>
+  <group>:
+    glob:
+	  - <globs>
+	exclude: <group>
+  <group>:
+    include:
+	  - <group>
+	exclude: <group>
+  <group>:
+    derive: <group>
+    capture: <capture>
+    replace: <replace>
+    pattern: <pattern>
+	exclude: <group>
+
+build:
+  - rule: <rule>
+	input:
+	  - <group>
+	output:
+	  - <group>
+	vars:
+	  <vars>
+  - rule: <rule>
+	merge: true
+	input: <group>
+	output: <group>
+	vars:
+	  <vars>
+
+II)	Notes
+
+-	<group> name of a file group.
+
+-	'exclude' is an optional value for a file group.
+		If provided, all files in the indicated group will not appear
+		in the group they are being excluded from.
+
+-	'include' The group will contain all files from the listed groups.
+		Duplicates will be removed.
+
+-	<rule> the rule to use. Rules are specified by 'tools.ninja'.
+
+-	'merge' is specified as true, then all inputs and outputs will be used
+		in one build target. Otherwise, multiple builds will be generated
+		using one file per group in each.
+
+-	<globs> are Ruby file globs, all matching files will be added
+		as inputs. More that one can be used.
+
+-	<capture> is an optional text to use for a Ruby Regex,
+		which will be used to capture part of the file name
+		for use in determining the output file name.
+
+-	<replace> is the text to match in the output template,
+		will be replaced by the text in the input file name
+		matched by <capture?>.
+
+-	<pattern> is a model used to create output file names
+		based on the input files.
+
+-	<vars> a list of build specific variables in the form of <name>: <value>
+

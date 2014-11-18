@@ -1,0 +1,24 @@
+---
+
+# Specification for 'tools.rb' to generate 'tools.ninja' from.
+
+# Each entry represents a build rule.
+cxx: # This will be the command line arg name and the value of the generated rule's description variable.
+  description: "C++ Compiler"
+  options:
+    gcc:
+      description: "GNU C++ Compiler"
+      vars:
+        command: ${cxxexe} -MMD -MF ${out}.d ${cxxflags} -o ${out} -c ${in}
+        deps: gcc
+        depfile: ${out}.d
+link:
+  description: Linker
+  options:
+    ld:
+      description: "GNU LD Linker"
+      vars:
+        command: ${linkexe} -pipe ${lflags} ${lpaths} ${libs} -o ${out} ${in}
+        pool: link_pool
+
+...

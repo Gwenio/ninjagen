@@ -1,0 +1,35 @@
+
+See 'samples/config.yml' for an example.
+
+I)	Structure
+
+vars:
+  <name>:
+    description: <brief>
+    default: <value?>
+  <name>:
+    description: <brief>
+    default: <value?>
+    hidden: true
+
+pre:
+  - <files>
+
+post:
+  - <files>
+
+II)	Notes
+
+-	<name> is the name of a Ninja variable to create.
+
+-	<brief> is a brief description of how it is used.
+		This is displayed by 'config.rb' when listing options.
+
+-	<value?> is the default value. Optional.
+
+-	'hidden' indicates if the value can be set at the command line.
+		Optional, defaults to false. Values are 'true' and 'false' (no quotes).
+
+-	<files> list of files to include, prefix each with a dash. Optional.
+		Those listed under 'pre' will come before the tool and project files,
+		those under post will come after.

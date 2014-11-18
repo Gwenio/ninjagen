@@ -1,0 +1,6 @@
+
+# Common include for builds.
+
+build program: phony ${bindir}/program${exe}
+
+default program

@@ -1,0 +1,30 @@
+
+See 'samples/tools.yml' for an example.
+
+I)	Structure
+
+<rule>
+  description: <type>
+  options:
+    <tool>
+      description: <brief>
+      vars:
+	    command: <command>
+		<vars>
+
+II)	Notes
+
+-	<rule> is the name of the rule to create.
+		Also the command line option name during generation.
+
+-	<type> is a short description of tool type.
+
+-	<tool> alias for a tool in the options of tools.rb.
+
+-	<vars> any variables for the rule other than the command.
+		One per line, in the form of <name>: <value>
+
+-	<command> the command to execute the tool.
+
+-	<brief> is a short description of tool for
+		tools.rb to display.

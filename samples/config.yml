@@ -1,0 +1,42 @@
+---
+
+# Specification for 'config.rb' to generate 'build.ninja' from.
+
+# Project variables. Will be listed in the order they appear here in the generated file.
+# Each has three values: a description, an optional default value, and an optional value for if they are hidden.
+# The defaults here map the value to be equal to another variable (Ninja will do the expansion).
+# 'hidden' (not used in this sample) should have the value 'true' or 'false', with the latter being the default.
+# Hidden variables must have a default, and the configuration script will not let it be set.
+# Hidden variables are meant to be set per build rule or build target.
+vars:
+  builddir: # General Variables
+    description: "Directory to store Ninja's files."
+  bindir: # Variables used by 'project.ninja'.
+    description: "Binary output directory."
+    default: "${builddir}"
+  objdir:
+    description: "Object file output directory."
+    default: "${builddir}"
+  exe:
+    description: "Executable file extention."
+  obj:
+    description: "Object file extention."
+  cxxflags:
+    description: "C++ Compiler flags."
+  lflags:
+    description: "Linker flags."
+  cxxexe:
+    description: "C++ Compiler executable file."
+  linkexe:
+    description: "Linker executable file."
+    default: "${cxxexe}"
+
+# List of files to include before standard includes (tools and project).
+pre:
+  - pre.ninja
+
+# List of files to include after standard includes.
+post:
+  - post.ninja
+
+...

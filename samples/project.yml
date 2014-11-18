@@ -1,0 +1,45 @@
+---
+
+# Project specification for 'project.rb' to generate 'project.ninja' from.
+
+# List of file groups. This is separate from builds to simplify processing.
+files:
+  src: # File list generated from one or more file globs.
+    glob:
+      - "src/**.cpp"
+  src_obj: # File list derived from a previous one.
+    derive: src # The 'capture' regex is used to extract part of file names from this group.
+    capture: "\\A(([^\\.]+(?=\\.cpp\\Z))|([^\\.]+\\.))+" # magic, don't touch without grimoire of ruby regex in hand
+    replace: "#" # All matches of this value in 'pattern' will be replaced with the captured value.
+    pattern: "${objdir}/#${obj}" # The pattern for generated file names.
+  driver: # Literal list of files. There could be more, but in this case there is only one.
+    list:
+      - driver.cpp
+  driver_obj: # file literal with embedded Ninja variables to be expanded when building.
+    list:
+      - "${objdir}/driver${obj}"
+  obj: # File list that combines multiple groups. Duplicates will be removed.
+    include:
+      - src_obj
+      - driver_obj
+  exe:
+    list:
+      - "${bindir}/program${exe}"
+
+build:
+  - rule: cxx # the ninja rule to use
+    input: # normally, if multiple files are in groups for a build then multiple builds will be created
+      - src
+    output: # all input and output groups must have the same number of files in them.
+      - src_obj # if multiple groups are listed for input or output, then one file from each will be used for each build item
+  - rule: cxx
+    input:
+      - driver
+    output:
+      - driver_obj
+  - rule: link
+    merge: true # all files listed as input and output will be used in the same build.
+    input: obj # only one input and output group can be used when merge is true.
+    output: exe
+
+...
